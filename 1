@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# --- ИМЯ: base_message.sh ---
+# Описание: Простой скрипт на Bash с использованием Base64 для GitHub.
+
+# 1. Определение исходного сообщения
+ORIGINAL_MESSAGE="Привет, GitHub Actions! Сегодня: $(date +%F %H:%M:%S)"
+echo "--- Исходное сообщение ---"
+echo "$ORIGINAL_MESSAGE"
+echo "--------------------------"
+
+
+# 2. Кодирование сообщения в Base64
+# Используется команда 'base64' (без опций, для кодирования)
+ENCODED_MESSAGE=$(echo -n "$ORIGINAL_MESSAGE" | base64)
+
+echo "--- Закодировано в Base64 ---"
+echo "$ENCODED_MESSAGE"
+echo "----------------------------"
+
+# 3. Декодирование сообщения обратно
+# Используется команда 'base64 -d' (для декодирования)
+DECODED_MESSAGE=$(echo "$ENCODED_MESSAGE" | base64 -d)
+
+echo "--- Декодировано обратно ---"
+echo "$DECODED_MESSAGE"
+echo "----------------------------"
+
+# 4. Проверка и вывод результата
+if [ "$ORIGINAL_MESSAGE" = "$DECODED_MESSAGE" ]; then
+  echo "Успех! Оригинальное и декодированное сообщения совпадают."
+else
+  echo "Ошибка преобразования Base64."
+  exit 1
+fi
